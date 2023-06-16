@@ -4,6 +4,7 @@ parking_spot 클래스를 제공합니다.
 생성자, get메소드, __str__특수 메소드를 제공합니다.
 그 외에 str_list_to_class_list 함수는 str형식의 리스트를 객체 리스트로 저장하여 반환합니다.
 print_spots 함수는 매게변수로 받은 리스트의 인덱스를 하나씩 전부 출력합니다.
+filter_by_~~ 함수는 사용자가 원하는 딕셔너리의 키값을 기준으로 필터링하고 그 리스트를 반환합니다.
 '''
 class parking_spot:
     __item = {} #딕셔너리 생성
@@ -48,7 +49,31 @@ def print_spots(spots): #출력
     for i in spots:
         print(i)
         
+def filter_by_name(spots, name): #name을 기준으로 필터링
+    filtered_list = [spots[i] for i in range(len(spots)) if name in spots[i].get('name')]
+    return filtered_list
 
+def filter_by_city(spots, city): #city을 기준으로 필터링
+    filtered_list = [spots[i] for i in range(len(spots)) if city in spots[i].get('city')]
+    return filtered_list
+
+def filter_by_district(spots, district): #distirct을 기준으로 필터링
+    filtered_list = [spots[i] for i in range(len(spots)) if district in spots[i].get('district')]
+    return filtered_list
+
+def filter_by_ptype(spots, ptype): #ptype을 기준으로 필터링
+    filtered_list = [spots[i] for i in range(len(spots)) if ptype in spots[i].get('ptype')]
+    return filtered_list        
+
+def filter_by_location(spots,locations): #longitude와 latitude의 값을 기준으로 필터링
+    filtered_list = [
+        spots[i] for i in range(len(spots))
+        if spots[i].get('longitude')>locations[2] and
+            spots[i].get('longitude')<locations[3] and
+            spots[i].get('latitude')>locations[0] and
+            spots[i].get('latitude')<locations[1]
+    ]
+    return filtered_list
 
 # 각 단계별로 테스트 (테스트할때 주석해제 후 사용)
 if __name__ == '__main__':
@@ -60,8 +85,8 @@ if __name__ == '__main__':
     print_spots(spots)
 
     # version#3
-    # spots = filter_by_district(spots, '동작')
-    # print_spots(spots)
+    spots = filter_by_district(spots, '동작')
+    print_spots(spots)
     
     # version#4
     # spots = sort_by_keyword(spots, 'name')
