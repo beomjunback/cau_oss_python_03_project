@@ -2,11 +2,12 @@
 menu_selector 모듈은
 start_process 함수를 제공합니다. 이는
 메뉴에 표시된 원하는 옵션을 입력받고 실행합니다.
-현재 완성된 기능: "[1] print", "[2] filter", "[4] exit"
+현재 완성된 기능: "[1] print", "[2] filter", "[3] sort", "[4] exit"
 사용자가 1번을 택할시 "got"을 parking_spot_manager의 클래스의 형식에 맞게 출력합니다.
 사용자가 2번을 택할시 원하는 key값을 기준으로 필터링할 수 있습니다.
+사용자가 3번을 택할시 원하는 key값을 기준으로 정렬합니다.
 사용자가 4번을 택할시 프로그램을 종료합니다. 그전까지 반복합니다.
-'''    
+'''
 
 import parking_spot_manager as psm
 import file_manager as fm
@@ -54,15 +55,15 @@ def start_process(path):
                 got = (psm.filter_by_location(got,minmax))
             else: #input 오류
                 print("invalid input")
-        elif select == 3:
+        elif select == 3: #3번 선택시 원하는 key값을 기준으로 정렬(오름차순)
+            got = psm.str_list_to_class_list(fm.read_file(path))
             keywords = ['name', 'city', 'district', 'ptype', 'latitude', 'longitude']
             print("---sort by---")
             print(keywords)
             keyword = input('type keyword:')
             if keyword in keywords:
-                print("not implemented yet")
-                # fill this block
-            else: print("invalid input")
+                got = psm.sort_by_keyword(got,keyword)
+            else: print("invalid input") #input 에러
         elif select == 4: #4번 선택시 프로그램을 종료합니다.
             print("Exit")
             break
